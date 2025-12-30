@@ -2,7 +2,9 @@
 The funny win95-themed err.
 
 ​Русский
+
 ​Описание
+
 ​Это шуточный веб-проект, имитирующий интерфейс системного окна Windows 95. Пользователю задается простой вопрос: "Вы лучший?". Однако скрипт сделан так, что ответить отрицательно невозможно, а кнопка подтверждения постоянно "убегает" от курсора.
 ​Особенности
 ​Ностальгический дизайн: Полная стилизация под интерфейс Win95 (цвета, тени, шрифты).
@@ -15,7 +17,9 @@ The funny win95-themed err.
 ​Попробуйте нажать "Да" (спойлер: это невозможно) :)
 
 ​English
+
 ​Description
+
 ​A prank web project that emulates a Windows 95 system dialog box. The user is asked a simple question: "Are you the best?". However, the script is designed so that it's impossible to say "No", and the "Yes" button constantly "escapes" from the cursor.
 ​Features
 ​Nostalgic Design: Faithful recreation of the Win95 UI (colors, inset shadows, fonts).
