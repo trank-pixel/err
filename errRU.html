@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Системная ошибка</title>
+    <style>
+        /* Фон рабочего стола Win95 */
+        body {
+            background-color: #008080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Tahoma", "Arial", sans-serif;
+        }
+
+        /* Окно сообщения */
+        .window {
+            background: #c0c0c0;
+            width: 300px;
+            box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+            padding: 2px;
+            position: relative;
+        }
+
+        /* Синяя шапка окна */
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            padding: 3px 2px 3px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .title-bar-controls button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            font-size: 9px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            cursor: default;
+        }
+
+        /* Содержимое окна */
+        .window-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .message-text {
+            font-size: 13px;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        /* Кнопки */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            height: 50px; /* Резервируем место */
+            position: relative;
+        }
+
+        .win-button {
+            padding: 4px 15px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            outline: 1px solid #808080;
+            font-size: 13px;
+            min-width: 75px;
+            cursor: default;
+            position: absolute;
+        }
+
+        .win-button:active {
+            border-color: #0a0a0a #fff #fff #0a0a0a;
+            outline: 1px solid #808080;
+            padding: 5px 14px 3px 16px;
+        }
+
+        /* Начальные позиции кнопок */
+        #btn-yes { left: 50px; top: 10px; }
+        #btn-no { right: 50px; top: 10px; }
+
+    </style>
+</head>
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <span>Вопрос</span>
+        <div class="title-bar-controls">
+            <button>x</button>
+        </div>
+    </div>
+    <div class="window-body">
+        <div class="message-text">Вы лучший?</div>
+        <div class="buttons-container" id="container">
+            <button class="win-button" id="btn-yes">Да</button>
+            <button class="win-button" id="btn-no">Нет</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const btnYes = document.getElementById('btn-yes');
+    const btnNo = document.getElementById('btn-no');
+    const container = document.getElementById('container');
+
+    function moveButton(btn) {
+        // Ограничиваем область "побега" размером экрана, 
+        // чтобы кнопка могла вылетать за пределы маленького окошка
+        const maxX = window.innerWidth - btn.offsetWidth - 50;
+        const maxY = window.innerHeight - btn.offsetHeight - 50;
+        
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        // Переносим кнопку в body, чтобы она летала по всему экрану
+        document.body.appendChild(btn);
+        btn.style.position = 'fixed';
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+        btn.style.zIndex = '1000';
+    }
+
+    // Обработка кнопки "Да"
+    btnYes.addEventListener('mouseover', () => moveButton(btnYes));
+    btnYes.addEventListener('click', () => moveButton(btnYes));
+
+    // Обработка кнопки "Нет"
+    btnNo.addEventListener('click', () => {
+        btnNo.innerText = 'Да';
+        // После первого клика она тоже начинает убегать при наведении
+        btnNo.addEventListener('mouseover', () => moveButton(btnNo));
+        moveButton(btnNo);
+    });
+</script>
+
+</body>
+</html>

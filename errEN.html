@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>System Message</title>
+    <style>
+        /* Classic Win95 Teal Desktop Background */
+        body {
+            background-color: #008080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Tahoma", "Arial", sans-serif;
+            overflow: hidden;
+        }
+
+        /* Dialog Box Container */
+        .window {
+            background: #c0c0c0;
+            width: 320px;
+            box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+            padding: 2px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Title Bar */
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            padding: 3px 2px 3px 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .title-bar-controls button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #808080 #808080 #fff;
+            font-size: 9px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            cursor: default;
+        }
+
+        /* Main Content */
+        .window-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .message-text {
+            font-size: 13px;
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        /* Buttons Styling */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            height: 40px;
+            position: relative;
+        }
+
+        .win-button {
+            padding: 4px 15px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            outline: 1px solid #808080;
+            font-size: 13px;
+            min-width: 75px;
+            cursor: default;
+            position: absolute;
+        }
+
+        .win-button:active {
+            border-color: #0a0a0a #fff #fff #0a0a0a;
+            outline: 1px solid #808080;
+            padding: 5px 14px 3px 16px;
+        }
+
+        /* Initial Positions inside the window */
+        #btn-yes { left: 60px; top: 5px; }
+        #btn-no { right: 60px; top: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <span>Question</span>
+        <div class="title-bar-controls">
+            <button>x</button>
+        </div>
+    </div>
+    <div class="window-body">
+        <div class="message-text">Are you the best?</div>
+        <div class="buttons-container" id="container">
+            <button class="win-button" id="btn-yes">Yes</button>
+            <button class="win-button" id="btn-no">No</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const btnYes = document.getElementById('btn-yes');
+    const btnNo = document.getElementById('btn-no');
+
+    function escapeButton(btn) {
+        // Calculate safe boundaries
+        const maxX = window.innerWidth - btn.offsetWidth - 20;
+        const maxY = window.innerHeight - btn.offsetHeight - 20;
+        
+        const randomX = Math.max(10, Math.random() * maxX);
+        const randomY = Math.max(10, Math.random() * maxY);
+
+        // Pop the button out of the window to move across the whole screen
+        document.body.appendChild(btn);
+        btn.style.position = 'fixed';
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+        btn.style.zIndex = '9999';
+    }
+
+    // Logic for "Yes" button (Always run away)
+    btnYes.addEventListener('mouseover', () => escapeButton(btnYes));
+    btnYes.addEventListener('click', () => escapeButton(btnYes));
+
+    // Logic for "No" button
+    btnNo.addEventListener('click', () => {
+        btnNo.innerText = 'Yes';
+        // Now it inherits the "escape" behavior
+        btnNo.addEventListener('mouseover', () => escapeButton(btnNo));
+        escapeButton(btnNo);
+    });
+</script>
+
+</body>
+</html>
